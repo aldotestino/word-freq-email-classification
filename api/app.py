@@ -2,16 +2,19 @@ import os
 from pydantic import BaseModel
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from sklearn.linear_model import LogisticRegression
 import uvicorn
+
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LogisticRegression
 import joblib
 
-from email_classifier import EmailClassifier
+from model.email_classifier import EmailClassifier
 
-sc: StandardScaler = joblib.load('saved_scaler.joblib')
-model: LogisticRegression = joblib.load('saved_model.joblib')
-ec = EmailClassifier(model, sc)
+sc: StandardScaler = joblib.load('./model/scaler.joblib')
+pca: PCA = joblib.load('./model/best_pca.joblib')
+model: LogisticRegression = joblib.load('./model/best_model.joblib')
+ec = EmailClassifier(scaler=sc, pca=pca, model=model)
 
 PORT = int(os.environ.get("PORT", 8000))
 

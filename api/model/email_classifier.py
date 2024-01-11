@@ -3,9 +3,10 @@ from constants import words, chars
 
 
 class EmailClassifier:
-    def __init__(self, model, scaler):
-        self.model = model
+    def __init__(self, scaler, pca, model):
         self.scaler = scaler
+        self.pca = pca
+        self.model = model
 
     def extract_frequency(self, text):
         text_lower = text.lower()
@@ -73,5 +74,6 @@ class EmailClassifier:
         features = self.extract_features(text)
         x = list(features.values())
         x = self.scaler.transform([x])
+        x = self.pca.transform(x)
         pred = self.model.predict(x)
         return int(pred[0])
