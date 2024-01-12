@@ -35,6 +35,10 @@ app.add_middleware(
 class Data(BaseModel):
   text: str
 
+@app.get('/')
+def healthcheck():
+  return {'status': 'ok'}
+
 
 @app.post('/predict', status_code=status.HTTP_200_OK)
 def predict(data: Data):
