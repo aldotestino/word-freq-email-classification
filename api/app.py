@@ -6,14 +6,14 @@ import uvicorn
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
 import joblib
 
 from model.email_classifier import EmailClassifier
 
 sc: StandardScaler = joblib.load('./model/scaler.joblib')
 pca: PCA = joblib.load('./model/best_pca.joblib')
-model: LogisticRegression = joblib.load('./model/best_model.joblib')
+model: SGDClassifier = joblib.load('./model/best_model.joblib')
 ec = EmailClassifier(scaler=sc, pca=pca, model=model)
 
 PORT = int(os.environ.get("PORT", 8080))
