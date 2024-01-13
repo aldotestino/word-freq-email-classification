@@ -4,12 +4,14 @@ import { Form, FormField, FormControl, FormMessage, FormItem, FormLabel } from '
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { PromptSchema, promptSchema } from '@/lib/validators';
+import { Loader2 } from 'lucide-react'
 
 type PromptProps = {
   onSubmit: (data: PromptSchema) => void;
+  isLoading?: boolean;
 };
 
-function Prompt({ onSubmit }: PromptProps) {
+function Prompt({ onSubmit, isLoading }: PromptProps) {
 
   const form = useForm<PromptSchema>({
     resolver: zodResolver(promptSchema),
@@ -36,7 +38,10 @@ function Prompt({ onSubmit }: PromptProps) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="">Predict</Button>
+          <Button disabled={isLoading} type="submit" className="">
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Predict
+          </Button>
         </form>
       </Form>
     </section>

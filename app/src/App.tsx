@@ -15,7 +15,7 @@ function App() {
         <header className="flex items-center space-x-8 fixed top-0 bg-white py-4 w-full">
           <h1 className="text-lg font-bold">email-classifier</h1>
         </header>
-        <Prompt onSubmit={predict.mutateAsync} />
+        <Prompt onSubmit={predict.mutateAsync} isLoading={predict.isLoading} />
         {predict.isSuccess && <Prediction prediction={predict.data.prediction} />}
       </div>
     </main>
